@@ -1,7 +1,7 @@
 # Project Collie (Autonomous Kitting Robot)
 [![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 [![Build Status](https://github.com/lilnpuma/ProjectCollie/actions/workflows/build_and_coveralls.yml/badge.svg)](https://github.com/lilnpuma/ProjectCollie/actions/workflows/build_and_coveralls.yml)
-[![Coverage Status](https://coveralls.io/repos/github/lilnpuma/ProjectCollie/badge.svg?branch=master)](https://coveralls.io/github/lilnpuma/ProjectCollie?branch=master
+[![Coverage Status](https://coveralls.io/repos/github/lilnpuma/ProjectCollie/badge.svg?branch=main)](https://coveralls.io/github/lilnpuma/ProjectCollie?branch=master)
 ## Overview
 
 The aim of the project is to implement a solution for automation of warehouses using manipulator robot to perform kitting operations autonomously. Robotic Kitting is the creation of product assortments, most often for retail sale. High speed picking robots are well adapted to this task. Using robot vision, autonomous
