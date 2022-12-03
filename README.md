@@ -42,3 +42,17 @@ This project will be completed using AIP with the involvement of 2 programmers u
 - [UML Activity Diagram](/project_docs/phase_1/UML%20Activity%20Diagram.png)
 
 - [UML Class Diagram](/UML/initial/UML%20diagram.png)
+
+## Tools, libraries and dependencies used 
+- C++ 14 
+- ROS2 Humble
+- OpenCV 
+- CMake 
+- Git 
+- Github CI 
+- Coverall
+- RViz
+- Gazebo
+- Panda Manipulator
+- MoveIt
+- ROStest, GTest, GMock 
