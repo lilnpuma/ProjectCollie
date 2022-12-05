@@ -6,11 +6,12 @@
   <xacro:arg name="arm_id" default="panda" />
     <!-- Is the robot being simulated in gazebo?" -->
     <xacro:arg name="gazebo" default="true" />
+    <xacro:arg name="ros2_control" default="false" />
     
     <!-- Should a franka_gripper be mounted at the flange?" -->
     <xacro:arg name="hand" default="true" />
 
-  <xacro:panda_robot arm_id="$(arg arm_id)" joint_limits="${xacro.load_yaml('$(find panda_description)/config/joint_limits.yaml')}" hand="$(arg hand)" gazebo="$(arg gazebo)">
+  <xacro:panda_robot arm_id="$(arg arm_id)" joint_limits="${xacro.load_yaml('$(find panda_description)/config/joint_limits.yaml')}" hand="$(arg hand)" gazebo="$(arg gazebo)"  ros2_control="$(arg ros2_control)">
   </xacro:panda_robot>
 
 </robot>
