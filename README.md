@@ -56,3 +56,40 @@ This project will be completed using AIP with the involvement of 2 programmers u
 - Panda Manipulator
 - MoveIt
 - ROStest, GTest, GMock 
+
+## Build information
+
+This package depends on ros2_control and gazebo_ros2_control. Due to the volatile state of ROS2 Humble, it is suggested that these packages be built from source to ensure that they are compatible with the package.
+
+```bash
+cd ~/ws/src
+mkdir depes
+## Folder to  store the dependencies
+cd depes
+## Clone the dependencies
+git clone git@github.com:ros-controls/gazebo_ros2_control.git
+git clone git@github.com:ros-controls/ros2_control.git
+cd ros2_control
+vcs import< ros2_control.humble.repos
+cd ~/ws
+## Update dependencies
+rosdep update
+rosdep install -y -r -i --rosdistro ${ROS_DISTRO} --from-paths src/
+## Build the project
+colcon build
+## Source the project
+. install/setup.bash
+```
+
+> :warning: During the the build if gazebo_ros2_control fails - The API for hardware info present in ros2_control has been updated and is due for an update in gazebo_ros2_control. Navigate to [gazebo_ros2_control_plugin.cpp](ENPM808x/ws/project_collie/src/depes/gazebo_ros2_control/gazebo_ros2_control/src/gazebo_ros2_control_plugin.cpp) and change the line 290 to the following 
+```c++
+std::string robot_hw_sim_type_str_ = control_hardware_info[i].hardware_plugin_name;
+```
+
+
+To build only the controller packages run the following build command
+```bash
+## Builds all the packages with the prefix panda ie; custom packages
+colcon build  --packages-select-regex panda*
+```
+
