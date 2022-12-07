@@ -30,17 +30,22 @@ def generate_launch_description():
     gazebo = IncludeLaunchDescription(
         PythonLaunchDescriptionSource([os.path.join(
             get_package_share_directory('gazebo_ros'), 'launch'), '/gazebo.launch.py']),
-        launch_arguments = {'use_sim_time': use_sim_time}.items()
+        launch_arguments = {'use_sim_time': use_sim_time, 'publish_rate': '1000.0'}.items()
         )
-    
     moveit_config = (
         MoveItConfigsBuilder("panda")
         .robot_description(file_path="config/panda.urdf.xacro")
         .robot_description_semantic(file_path="config/panda.srdf")
-        .trajectory_execution(file_path="config/moveit_controllers.yaml")
+        .trajectory_execution(file_path="config/moveit_controllers.yaml", moveit_manage_controllers = False)
+        .robot_description_kinematics(file_path="config/kinematics.yaml")
         .planning_pipelines(
             pipelines=["ompl"],
         )
+        .planning_scene_monitor(
+            publish_planning_scene=True,
+            publish_geometry_updates=True,
+            publish_state_updates=True,
+            publish_transforms_updates=True,)
         .to_moveit_configs()
     )
     
@@ -48,7 +53,7 @@ def generate_launch_description():
         package="moveit_ros_move_group",
         executable="move_group",
         output="screen",
-        parameters=[moveit_config.to_dict()],
+        parameters=[moveit_config.to_dict(), {"use_sim_time": use_sim_time}],
         arguments=["--ros-args", "--log-level", "info"],
     )
     
@@ -74,7 +79,14 @@ def generate_launch_description():
         executable="robot_state_publisher",
         name="robot_state_publisher",
         output="both",
-        parameters=[moveit_config.robot_description],
+        parameters=[moveit_config.robot_description, {"use_sim_time": use_sim_time}],
+    )
+    
+    static_tf = Node(
+        package = 'tf2_ros',
+        executable = 'static_transform_publisher',
+        output = 'screen',
+        arguments=["0.0", "0.0", "0.0", "0.0", "0.0", "0.0", "world", "panda_link0"],
     )
     
     spawn_entity = Node(
@@ -101,21 +113,17 @@ def generate_launch_description():
         executable = 'spawner',
         arguments = ['panda_gripper_controller'],
     )
-    # spawn_entity = RegisterEventHandler(
-    #     OnProcessStart(
-    #         target_action=robot_state_publisher,
-    #         on_start = [spawn_entity],
-    #     )
-    # )
     
     launch_description = [
         gz_resource_path_env_var,
         gazebo,
+        ]
+    nodes = [
         move_group_node,
         rviz_node,
-        robot_state_publisher]
-    nodes = [
+        robot_state_publisher,
         spawn_entity,
+        static_tf,
         RegisterEventHandler(
             OnProcessStart(
                 target_action = spawn_entity,
