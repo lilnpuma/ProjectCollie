@@ -61,7 +61,15 @@ def generate_launch_description():
                                 
     camera_node = ExecuteProcess(
         cmd=['ros2', 'service', 'call', '/spawn_entity','gazebo_msgs/SpawnEntity', camera_urdf],output='log'
-    )  
+    ) 
+    
+    static_tf = Node(
+        package = 'tf2_ros',
+        executable = 'static_transform_publisher',
+        output = 'screen',
+        arguments=[str(0.0), str(-0.5), "2.75", "0.0", str(3.141/2), str(3.141/2), "world", "table_camera_link"],
+        # parameters=[{'x': 0.0, 'y': -0.5, 'z': 2.75, 'r': 0.0, 'p': 3.141/2, 'y': 3.141/2, 'frame_id': 'world', 'child_frame_id': 'camera'}]
+    )
     
     spawner_node = block_spawner_nodes(5)
     spawner_node = TimerAction(period=5.0, actions=spawner_node+[camera_node], condition = IfCondition(block_gen))
@@ -70,7 +78,8 @@ def generate_launch_description():
         gz_resource_path_env_var,
         start_gazebo_server_cmd,
         start_gazebo_client_cmd,
-        spawner_node
+        spawner_node,
+        static_tf
     ]
     
     return LaunchDescription(declared_arguments+launch_node)
@@ -79,7 +88,7 @@ def block_spawner_nodes(num_blocks):
     # Path to urdf.xacro file
     base_path = os.path.join(get_package_share_directory('panda_world'), 'urdf', 'unit_box.urdf.xacro')
     # Range of x and y coordinates for spawning blocks
-    x_range = (-0.40, 0.40)
+    x_range = (-0.5, 0.5)
     y_range = (-0.2, -0.7)
     # List of colors for blocks
     blocks = ['red',
