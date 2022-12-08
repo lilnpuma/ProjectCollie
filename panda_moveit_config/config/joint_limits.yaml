@@ -10,46 +10,46 @@ default_acceleration_scaling_factor: 0.1
 joint_limits:
   panda_finger_joint1:
     has_velocity_limits: true
-    max_velocity: 0.20000000000000001
+    max_velocity: 0.1
     has_acceleration_limits: false
-    max_acceleration: 0
+    max_acceleration: 0.0
   panda_finger_joint2:
     has_velocity_limits: true
-    max_velocity: 0.20000000000000001
+    max_velocity: 0.1
     has_acceleration_limits: false
-    max_acceleration: 0
+    max_acceleration: 0.0
   panda_joint1:
     has_velocity_limits: true
-    max_velocity: 2.1749999999999998
-    has_acceleration_limits: false
-    max_acceleration: 0
+    max_velocity: 2.175
+    has_acceleration_limits: true
+    max_acceleration: 3.75
   panda_joint2:
     has_velocity_limits: true
-    max_velocity: 2.1749999999999998
-    has_acceleration_limits: false
-    max_acceleration: 0
+    max_velocity: 2.175
+    has_acceleration_limits: true
+    max_acceleration:  1.875
   panda_joint3:
     has_velocity_limits: true
-    max_velocity: 2.1749999999999998
-    has_acceleration_limits: false
-    max_acceleration: 0
+    max_velocity: 2.175
+    has_acceleration_limits: true
+    max_acceleration: 2.5
   panda_joint4:
     has_velocity_limits: true
-    max_velocity: 2.1749999999999998
-    has_acceleration_limits: false
-    max_acceleration: 0
+    max_velocity: 2.175
+    has_acceleration_limits: true
+    max_acceleration: 3.125
   panda_joint5:
     has_velocity_limits: true
-    max_velocity: 2.6099999999999999
-    has_acceleration_limits: false
-    max_acceleration: 0
+    max_velocity: 2.6
+    has_acceleration_limits: true
+    max_acceleration: 3.75
   panda_joint6:
     has_velocity_limits: true
-    max_velocity: 2.6099999999999999
-    has_acceleration_limits: false
-    max_acceleration: 0
+    max_velocity: 2.6
+    has_acceleration_limits: true
+    max_acceleration: 5.0
   panda_joint7:
     has_velocity_limits: true
-    max_velocity: 2.6099999999999999
-    has_acceleration_limits: false
-    max_acceleration: 0
+    max_velocity: 2.6
+    has_acceleration_limits: true
+    max_acceleration: 5.0
