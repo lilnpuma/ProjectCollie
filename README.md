@@ -24,6 +24,10 @@ in various industries to automated their assembly chain.
 - **Driver** : Manu Madhu Pillai (117817928)
 - **Navigator** : Akash Ravindra (117422085)
 
+### Phase 2
+- **Driver** : Akash Ravindra (117422085)
+- **Navigator** : Manu Madhu Pillai (117817928)
+
 ## Agile Iterative Process (AIP)
 This project will be completed using AIP with the involvement of 2 programmers using Pair-programming in turns. The detailed Product Backlog, Iteration Backlogs and Work Log are mentioned in the link given below :
 
@@ -43,6 +47,13 @@ This project will be completed using AIP with the involvement of 2 programmers u
 
 - [UML Class Diagram](/UML/initial/UML%20diagram.png)
 
+### Phase 2 (Implementation)
+- [Sprint 2 Notes](https://docs.google.com/document/d/12m7j60CVa9yK7Lz7AEWvJMyVStsDL-hOpDRUbwhlt0A/edit#heading=h.27bxryqx38f0)
+
+- [Quad Chart](https://docs.google.com/presentation/d/1bDqmEpYKWgdXigkWLl-adsmr33F7crr1vSKZkL6HYuA/edit?usp=sharing)
+
+- [UML Class Diagram](/UML/revised/uml.jpeg)
+
 ## Tools, libraries and dependencies used 
 - C++ 14 
 - ROS2 Humble
@@ -50,21 +61,26 @@ This project will be completed using AIP with the involvement of 2 programmers u
 - CMake 
 - Git 
 - Github CI 
-- Coverall
+- Codecov
 - RViz
 - Gazebo
 - Panda Manipulator
 - MoveIt
 - ROStest, GTest, GMock 
 
-## Build information
+## UML Diagram
+![image](/UML/revised/uml.jpeg)
+
+## Build instructions
 
 This package depends on ros2_control and gazebo_ros2_control. Due to the volatile state of ROS2 Humble, it is suggested that these packages be built from source to ensure that they are compatible with the package.
 
 ```bash
 cd ~/ws/src
-mkdir depes
+## Clone Repository
+git clone git@github.com:lilnpuma/ProjectCollie.git
 ## Folder to  store the dependencies
+mkdir depes
 cd depes
 ## Clone the dependencies
 git clone git@github.com:ros-controls/gazebo_ros2_control.git
@@ -92,4 +108,5 @@ To build only the controller packages run the following build command
 ## Builds all the packages with the prefix panda ie; custom packages
 colcon build  --packages-select-regex panda*
 ```
+
 
