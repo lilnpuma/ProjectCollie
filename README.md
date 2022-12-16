@@ -67,7 +67,7 @@ This project will be completed using AIP with the involvement of 2 programmers u
 - [UML Class Diagram](/UML/revised/uml.jpeg)
 
 ### Phase 3 (Final Phase)
-- [Sprint 3 Notes]()
+- [Sprint 3 Notes](https://docs.google.com/document/d/1aLDwV21oFEbNVUyM_sfGerGBF4CHGqHE5IiwTB9CbBY/edit?usp=sharing)
 
 - [Presentation Slides](https://docs.google.com/presentation/d/1uNn4hR_tEWcC7nWF5dTGCcLEECf9hzVEJbslrFmw4jE/edit?usp=sharing)
 
