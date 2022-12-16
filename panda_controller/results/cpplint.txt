@@ -1,0 +1,31 @@
+include/panda_controller/img_stack.hpp:78:  #endif line should be "#endif  // PANDA_CONTROLLER_INCLUDE_PANDA_CONTROLLER_IMG_STACK_HPP_"  [build/header_guard] [5]
+include/panda_controller/img_stack.hpp:46:  Single-parameter constructors should be marked explicit.  [runtime/explicit] [5]
+include/panda_controller/img_stack.hpp:59:  Add #include <string> for string  [build/include_what_you_use] [4]
+Done processing include/panda_controller/img_stack.hpp
+include/panda_controller/motion_stack.hpp:109:  #endif line should be "#endif  // PANDA_CONTROLLER_INCLUDE_PANDA_CONTROLLER_MOTION_STACK_HPP_"  [build/header_guard] [5]
+include/panda_controller/motion_stack.hpp:87:  Is this a non-const reference? If so, make const or use a pointer: std::string& block_color  [runtime/references] [2]
+include/panda_controller/motion_stack.hpp:101:  Add #include <utility> for pair<>  [build/include_what_you_use] [4]
+include/panda_controller/motion_stack.hpp:101:  Add #include <string> for string  [build/include_what_you_use] [4]
+Done processing include/panda_controller/motion_stack.hpp
+include/panda_controller/motion_stack_node.hpp:90:  #endif line should be "#endif  // PANDA_CONTROLLER_INCLUDE_PANDA_CONTROLLER_MOTION_STACK_NODE_HPP_"  [build/header_guard] [5]
+include/panda_controller/motion_stack_node.hpp:35:  Include the directory when naming header files  [build/include_subdir] [4]
+include/panda_controller/motion_stack_node.hpp:49:  Single-parameter constructors should be marked explicit.  [runtime/explicit] [5]
+include/panda_controller/motion_stack_node.hpp:68:  Add #include <string> for string  [build/include_what_you_use] [4]
+Done processing include/panda_controller/motion_stack_node.hpp
+src/img_node.cpp:25:  Include the directory when naming header files  [build/include_subdir] [4]
+Done processing src/img_node.cpp
+src/img_stack.cpp:25:  Include the directory when naming header files  [build/include_subdir] [4]
+src/img_stack.cpp:85:  Using C-style cast.  Use static_cast<int>(...) instead  [readability/casting] [4]
+Done processing src/img_stack.cpp
+src/motion_node.cpp:26:  Include the directory when naming header files  [build/include_subdir] [4]
+Done processing src/motion_node.cpp
+src/motion_stack.cpp:23:  Include the directory when naming header files  [build/include_subdir] [4]
+Done processing src/motion_stack.cpp
+src/motion_stack_node.cpp:24:  Include the directory when naming header files  [build/include_subdir] [4]
+Done processing src/motion_stack_node.cpp
+Done processing src/test.cpp
+Done processing test/main.cpp
+test/test.cpp:35:  Forstatic/global string constant, use a C style string instead: "const char mstck[]".  [runtime/string] [4]
+Done processing test/test.cpp
+Total errors found: 18
+
