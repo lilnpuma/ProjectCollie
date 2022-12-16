@@ -175,6 +175,8 @@ firefox ~/ws/install/panda_controller/coverage/index.html
 ---
 - The spawned Panda robot behaves loses control sporadically. Cause not found yet.
 - Gripper control is not optimal for picking object. Require a better mechanism.
+- All functions could not be tested due to moveit package dependency.
+- Rostests could not be done.
 ## License
 ---
 This project is licensed under the [Apache 2.0 License](https://www.apache.org/licenses/LICENSE-2.0). Further information can be found in the ```LICENSE``` file.
