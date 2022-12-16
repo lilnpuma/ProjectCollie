@@ -2,33 +2,46 @@ import os
 from typing import List
 from ament_index_python.packages import get_package_share_directory
 from launch import LaunchDescription
-from launch.actions import DeclareLaunchArgument, IncludeLaunchDescription, RegisterEventHandler, SetEnvironmentVariable
-from launch.event_handlers import OnProcessStart, OnProcessExit
+from launch.actions import (
+    DeclareLaunchArgument,
+    IncludeLaunchDescription,
+    RegisterEventHandler,
+    # SetEnvironmentVariable,
+)
+from launch.event_handlers import OnProcessStart  # OnProcessExit
 from launch.launch_description_sources import PythonLaunchDescriptionSource
-from launch.substitutions import LaunchConfiguration, EnvironmentVariable,LaunchConfiguration,PathJoinSubstitution
+from launch.substitutions import (
+    LaunchConfiguration,
+    # EnvironmentVariable,
+    # PathJoinSubstitution,
+)
 from launch_ros.actions import Node
 
-import xacro
+# import xacro
 from moveit_configs_utils import MoveItConfigsBuilder
 
 
 def generate_launch_description():
-    
+
     declared_arguments = generate_declared_arguments()
     use_sim_time = LaunchConfiguration("use_sim_time")
-    controller_package = get_package_share_directory('panda_controller')
+    controller_package = get_package_share_directory("panda_controller")
     rviz_config = LaunchConfiguration("rviz_config")
-    
+
     gazebo_node = IncludeLaunchDescription(
-        PythonLaunchDescriptionSource([os.path.join(
-            controller_package, 'launch'), '/gazebo.launch.py']),
+        PythonLaunchDescriptionSource(
+            [os.path.join(controller_package, "launch"), "/gazebo.launch.py"]
+        ),
     )
 
     moveit_config = (
         MoveItConfigsBuilder("panda")
         .robot_description(file_path="config/panda.urdf.xacro")
         .robot_description_semantic(file_path="config/panda.srdf")
-        .trajectory_execution(file_path="config/moveit_controllers.yaml", moveit_manage_controllers = False)
+        .trajectory_execution(
+            file_path="config/moveit_controllers.yaml",
+            moveit_manage_controllers=False
+        )
         .robot_description_kinematics(file_path="config/kinematics.yaml")
         .planning_pipelines(
             pipelines=["ompl"],
@@ -37,10 +50,11 @@ def generate_launch_description():
             publish_planning_scene=True,
             publish_geometry_updates=True,
             publish_state_updates=True,
-            publish_transforms_updates=True,)
+            publish_transforms_updates=True,
+        )
         .to_moveit_configs()
     )
-    
+
     move_group_node = Node(
         package="moveit_ros_move_group",
         executable="move_group",
@@ -48,16 +62,16 @@ def generate_launch_description():
         parameters=[moveit_config.to_dict(), {"use_sim_time": use_sim_time}],
         arguments=["--ros-args", "--log-level", "info"],
     )
-    
+
     rviz_node = Node(
         package="rviz2",
-            executable="rviz2",
-            output="log",
-            arguments=[
-                "--display-config",
-                rviz_config,
-            ],
-            parameters=[
+        executable="rviz2",
+        output="log",
+        arguments=[
+            "--display-config",
+            rviz_config,
+        ],
+        parameters=[
             moveit_config.robot_description,
             moveit_config.robot_description_semantic,
             moveit_config.planning_pipelines,
@@ -65,50 +79,63 @@ def generate_launch_description():
             {"use_sim_time": use_sim_time},
         ],
     )
-    
+
     robot_state_publisher = Node(
         package="robot_state_publisher",
         executable="robot_state_publisher",
         name="robot_state_publisher",
         output="both",
-        parameters=[moveit_config.robot_description, {"use_sim_time": use_sim_time}],
+        parameters=[moveit_config.robot_description,
+                    {"use_sim_time": use_sim_time}],
     )
-    
+
     static_tf = Node(
-        package = 'tf2_ros',
-        executable = 'static_transform_publisher',
-        output = 'screen',
-        arguments=["0.0", "0.0", "0.0", "0.0", "0.0", "0.0", "world", "panda_link0"],
+        package="tf2_ros",
+        executable="static_transform_publisher",
+        output="screen",
+        arguments=["0.0", "0.0", "0.0", "0.0",
+                   "0.0", "0.0", "world", "panda_link0"],
     )
-    
+
     spawn_entity = Node(
-        package = 'gazebo_ros',
-        executable = 'spawn_entity.py',
-        arguments = ['-entity', 'panda', '-topic', 'robot_description', '-x', '0.0', '-y', '0.0', '-z', '1.0'],
-        parameters = [{"use_sim_time": use_sim_time}],
+        package="gazebo_ros",
+        executable="spawn_entity.py",
+        arguments=[
+            "-entity",
+            "panda",
+            "-topic",
+            "robot_description",
+            "-x",
+            "0.0",
+            "-y",
+            "0.0",
+            "-z",
+            "1.0",
+        ],
+        parameters=[{"use_sim_time": use_sim_time}],
     )
-    
+
     load_joint_state_broadcaster = Node(
-        package = 'controller_manager',
-        executable = 'spawner',
-        arguments = ['joint_state_broadcaster'],
+        package="controller_manager",
+        executable="spawner",
+        arguments=["joint_state_broadcaster"],
     )
-    
+
     load_joint_trajectory_controller = Node(
-        package = 'controller_manager',
-        executable = 'spawner',
-        arguments = ['panda_arm_controller'],
+        package="controller_manager",
+        executable="spawner",
+        arguments=["panda_arm_controller"],
     )
-    
+
     load_gripper_trajectory_controller = Node(
-        package = 'controller_manager',
-        executable = 'spawner',
-        arguments = ['panda_gripper_controller'],
+        package="controller_manager",
+        executable="spawner",
+        arguments=["panda_gripper_controller"],
     )
-    
+
     launch_description = [
         gazebo_node,
-        ]
+    ]
     nodes = [
         move_group_node,
         robot_state_publisher,
@@ -117,22 +144,21 @@ def generate_launch_description():
         static_tf,
         RegisterEventHandler(
             OnProcessStart(
-                target_action = spawn_entity,
-                on_start = [
+                target_action=spawn_entity,
+                on_start=[
                     load_joint_state_broadcaster,
                     load_gripper_trajectory_controller,
                     load_joint_trajectory_controller,
-                ]
+                ],
             )
-        )
-        ]
-    
-    
-    return LaunchDescription(declared_arguments+launch_description+nodes)
-    
-    
+        ),
+    ]
+
+    return LaunchDescription(declared_arguments + launch_description + nodes)
+
+
 def generate_declared_arguments() -> List:
-    
+
     return [
         DeclareLaunchArgument(
             "use_sim_time",
@@ -147,5 +173,5 @@ def generate_declared_arguments() -> List:
                 "moveit.rviz",
             ),
             description="Path to configuration for RViz2.",
-        )
+        ),
     ]
