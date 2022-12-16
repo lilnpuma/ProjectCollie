@@ -23,13 +23,15 @@
 
 #include <rclcpp/rclcpp.hpp>
 
-#include "motion_stack.hpp"
+#include "motion_stack_node.hpp"
 
-int main(int argc, char **argv) {
+int main(int argc, char **argv)
+{
   rclcpp::init(argc, argv);
   auto motion_stack =
-      std::make_shared<pc_moveit::MotionStack>("panda_controller_motion");
+    std::make_shared<pc_moveit::MotionStackNode>("panda_controller_motion");
   rclcpp::executors::SingleThreadedExecutor executor;
+
   executor.add_node(motion_stack);
   executor.spin();
   rclcpp::shutdown();
